@@ -98,19 +98,14 @@ void readReloc32(FILE *fd)
 #define HUNK_CODE	0x3E9
 #define HUNK_END		0x3F2
 
-int main(int args, char **arg)
+int readhunk(const char *name)
 {
 	FILE *fd;
 	unsigned int hunkid;
 	bool _error = false;
 	bool _exit = false;
-	int n;
 
-	for (n=1;n<args;n++) printf("%s\n",arg[n]);
-
-	if (args!=2) return 0;
-
-	fd = fopen( (const char *) arg[1],"r");
+	fd = fopen( name ,"r" );
 	if (fd)
 	{
 		while( !feof(fd) && !_error && !_exit )
@@ -146,6 +141,19 @@ int main(int args, char **arg)
 
 		fclose(fd);
 	}
+}
+
+int main(int args, char **arg)
+{
+	int n;
+
+	for (n=1;n<args;n++) printf("%s\n",arg[n]);
+
+	if (args!=2) return 0;
+
+	readhunk( arg[1] );
 
 	return 0;
 }
+
+
